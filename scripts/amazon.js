@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js';
+import {cart, addToCart, calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -61,17 +61,20 @@ products.forEach((product) => {
 });
 
 function updateCartQuantity() {
-  // we solve the problem that when we add the same item to inctease the quantity 
-  let cartQuantity = 0 ;
 
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
+  const cartQuantity = calculateCartQuantity();
 
-  });
+  const cartElement = document.querySelector('.js-cart-quantity');
 
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-
+  // Hide zero
+  if (cartQuantity === 0) {
+    cartElement.innerHTML = '';
+  } else {
+    cartElement.innerHTML = cartQuantity;
+  }
 }
+
+updateCartQuantity();
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
