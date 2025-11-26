@@ -80,9 +80,14 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click', () => {
-    //to show the Data Atributes >>> very important 
-    const productId= button.dataset.productId ;
-    addToCart(productId);
-    updateCartQuantity(); 
+  const productId = button.dataset.productId;
+
+  // Get the quantity from the select
+  const quantity = Number(button.closest('.product-container').querySelector('select').value);
+
+  // Add to cart using that quantity
+  addToCart(productId, quantity);
+
+  updateCartQuantity(); 
   });
 });
