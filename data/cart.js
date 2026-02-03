@@ -1,4 +1,9 @@
-export let cart = JSON.parse(localStorage.getItem('cart'));
+export let cart;
+
+loadFromstorage()
+
+export function loadFromstorage() {
+  cart = JSON.parse(localStorage.getItem('cart'));
 
 if(!cart){
   cart = [{
@@ -10,6 +15,8 @@ if(!cart){
   quantity: 1,
   deliveryOptionId: '2'
 }];
+}
+
 }
 
 export function calculateCartQuantity() {
