@@ -7,8 +7,24 @@ import { loadCart } from '../data/cart.js';
 //import '../data/cart-class.js';
 //import '../data/backend-practice.js';
 
-// promise all to load multiple promises at the same time
+//using a sync await to make the code look more linear and easier to read
+//instead of using nested callbacks or promises and then >> very useful 
+async function loadPage() {
+  await loadProductsFetch();
 
+  const value = await new Promise((resolve) => {
+    loadCart(() => {
+      resolve('value3');
+    });
+  });
+  renderCheckoutHeader();
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+loadPage();
+
+// promise all to load multiple promises at the same time
+/*
 Promise.all([
   loadProductsFetch(),
 
@@ -25,7 +41,7 @@ Promise.all([
   renderPaymentSummary();
   });
 
-  
+  */
 
 
 // learn promises and async
