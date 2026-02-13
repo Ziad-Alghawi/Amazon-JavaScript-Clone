@@ -1,5 +1,6 @@
 import {cart} from '../../data/cart.js';
 
+
 export function renderCheckoutHeader(){
 
   let cartQuantity = 0;
@@ -7,6 +8,8 @@ export function renderCheckoutHeader(){
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
+
+  
 
   const checkoutHeaderHTML = `
       <div class="checkout-header">
@@ -20,7 +23,7 @@ export function renderCheckoutHeader(){
 
         <div class="checkout-header-middle-section">
           Checkout (<a class="return-to-home-link js-return-to-home-link"
-            href="amazon.html"></a>)
+          href="amazon.html">${cartQuantity} items</a>))
         </div>
 
         <div class="checkout-header-right-section">

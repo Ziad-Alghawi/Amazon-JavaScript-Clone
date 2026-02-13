@@ -23,7 +23,7 @@ Promise.all([
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
-});
+  });
 
   
 
