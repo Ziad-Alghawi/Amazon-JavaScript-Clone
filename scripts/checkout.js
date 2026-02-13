@@ -10,13 +10,26 @@ import { loadCart } from '../data/cart.js';
 //using a sync await to make the code look more linear and easier to read
 //instead of using nested callbacks or promises and then >> very useful 
 async function loadPage() {
-  await loadProductsFetch();
+  // using try catch to handle error in async await<<<<
+  // we can also use try catch in notmal code as well , whenever we got error it wont continue, it will jump 
+  try {
+    //throw 'error1'; //manually creating error by use throw
 
-  const value = await new Promise((resolve) => {
+    await loadProductsFetch();
+
+    const value = await new Promise((resolve, reject) => {
+      //throw 'error2'; // this is for promise
     loadCart(() => {
+      //reject('error3'); //manually creating error by use reject in promise
       resolve('value3');
     });
   });
+
+  // catch woks like .catch in promise 
+  } catch(error){
+      console.log('unexpected error. Please try again later');
+  }
+  
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();

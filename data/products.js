@@ -101,6 +101,7 @@ export function loadProductsFetch() {
     return response.json();
   }).then((productsData) => {
     //console.log(productsData);
+    
     products = productsData.map((productDetails) => {
       if(productDetails.type === 'clothing'){
         return new Clothing (productDetails);
@@ -109,9 +110,15 @@ export function loadProductsFetch() {
     });
 
     console.log('load products');
+    //handling error in promise by using catch >>
+  }).catch((error) => {
+    console.log('unexpected error. Please try again later');
   });
+
   return promise;
 }
+//loadProductsFetch();
+
 /*
 loadProductsFetch().then(() => {
   console.log('next step');
@@ -133,10 +140,16 @@ export function loadProducts(fun){
 
     fun();
   });
-
+  
+// error handling for xhr >>>  how we set up separate callback for errors
+  xhr.addEventListener('error', (error) => {
+    console.log('unexpected error. Please try again later');
+  });
+  // for error >>> xhr.open('GET', 'https://error.supersimplebackend.dev/products');
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
+//loadProducts();
 
 /*
 export const products = [
