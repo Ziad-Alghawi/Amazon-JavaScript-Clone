@@ -109,7 +109,6 @@ export function loadProductsFetch() {
       return new Product(productDetails);
     });
 
-    console.log('load products');
     //handling error in promise by using catch >>
   }).catch((error) => {
     console.log('unexpected error. Please try again later');

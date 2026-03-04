@@ -24,6 +24,7 @@ export function renderPaymentSummary() {
 
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
+
   });
 
   const paymentSummaryHTML = `

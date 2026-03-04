@@ -2,7 +2,6 @@ import {cart, removeFromCart, updateDeliveryOption, updateQuantity}
 from '../../data/cart.js';
 import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
-import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
@@ -133,6 +132,8 @@ export function renderOrderSummary() {
       container.remove();
 
       renderPaymentSummary();
+      renderCheckoutHeader(); 
+      
     });
   });
 
@@ -153,6 +154,8 @@ export function renderOrderSummary() {
 
     const container = link.closest('.product-quantity');
 
+    if (container.querySelector('input')) return;
+
     // create input
     const input = document.createElement('input');
     input.type = 'number';
@@ -168,22 +171,32 @@ export function renderOrderSummary() {
     container.appendChild(saveBtn);
     input.focus();
 
-    saveBtn.addEventListener('click', () => {
+    function saveQuantity() {
 
-      const productId =
-        container.querySelector('.js-delete-link')
-          .dataset.productId;
+  const productId =
+    container.querySelector('.js-delete-link')
+      .dataset.productId;
 
-      const newQuantity = Number(input.value);
+  const newQuantity = Number(input.value);
 
-      if (newQuantity > 0) {
-        updateQuantity(productId, newQuantity);
+  if (newQuantity > 0) {
+    updateQuantity(productId, newQuantity);
 
-        renderOrderSummary();
-        renderPaymentSummary();
-        renderCheckoutHeader();
-      }
-    });
+    renderOrderSummary();
+    renderPaymentSummary();
+    renderCheckoutHeader();
+  }
+}
+
+// Click Save
+saveBtn.addEventListener('click', saveQuantity);
+
+// Press Enter
+input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    saveQuantity();
+  }
+});
   });
 });
 
