@@ -77,21 +77,25 @@ export function renderPaymentSummary() {
       const response = await fetch('https://supersimplebackend.dev/orders', {
       method: 'POST',
       headers: { 
-        'content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         cart: cart
       })
   });
 
+  if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
   const order = await response.json();
   addOrder(order);
 
+  window.location.href = 'orders.html';
+
     } catch(error){
-      console.log('unexpected error. Please try again later');
+      alert('Unable to place your order right now. Please try again later.');
     }
-    
-    window.location.href = 'orders.html';
   });
 
 }

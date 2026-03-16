@@ -97,6 +97,9 @@ export function loadProductsFetch() {
   const promise = fetch(
     'https://supersimplebackend.dev/products'
   ).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Failed to load products: ${response.status}`);
+    }
     //console.log(response);
     return response.json();
   }).then((productsData) => {
@@ -110,8 +113,8 @@ export function loadProductsFetch() {
     });
 
     //handling error in promise by using catch >>
-  }).catch((error) => {
-    console.log('unexpected error. Please try again later');
+  }).catch(() => {
+    throw new Error('Unable to load product data.');
   });
 
   return promise;

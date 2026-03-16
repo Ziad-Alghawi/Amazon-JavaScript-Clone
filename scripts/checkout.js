@@ -17,7 +17,7 @@ async function loadPage() {
 
     await loadProductsFetch();
 
-    const value = await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       //throw 'error2'; // this is for promise
     loadCart(() => {
       //reject('error3'); //manually creating error by use reject in promise
@@ -27,7 +27,10 @@ async function loadPage() {
 
   // catch woks like .catch in promise 
   } catch(error){
-      console.log('unexpected error. Please try again later');
+      document.querySelector('.main').innerHTML = `
+        <p>Sorry, we could not load checkout right now. Please refresh and try again.</p>
+      `;
+      return;
   }
   
   renderCheckoutHeader();
